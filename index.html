@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Churrasco Moderna</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --secondary: #FFE66D;
+            --accent: #4ECDC4;
+            --background: #2D3047;
+            --text: #F7FFF7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: slideIn 1s ease;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .calculator {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        input[type="number"], input[type="checkbox"] {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid var(--primary);
+            background: transparent;
+            color: var(--text);
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            border-bottom-color: var(--accent);
+            outline: none;
+            transform: scale(1.02);
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background: var(--accent);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(78,205,196,0.3);
+        }
+
+        .results {
+            margin-top: 2rem;
+            display: grid;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s ease;
+        }
+
+        .result-card {
+            background: rgba(255,255,255,0.05);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .result-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 600px) {
+            body { padding: 1rem; }
+            .calculator { padding: 1rem; }
+            h1 { font-size: 2em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍖 Calculadora de Churrasco</h1>
+        <div class="calculator">
+            <div class="input-group">
+                <label for="men">Homens adultos:</label>
+                <input type="number" id="men" min="0" value="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="women">Mulheres adultas:</label>
+                <input type="number" id="women" min="0" value="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="children">Crianças:</label>
+                <input type="number" id="children" min="0" value="0">
+            </div>
+            
+            <div class="input-group">
+                <label for="hours">Duração (horas):</label>
+                <input type="number" id="hours" min="1" value="4">
+            </div>
+            
+            <div class="input-group">
+                <label>
+                    <input type="checkbox" id="sides"> Terá acompanhamentos?
+                </label>
+            </div>
+            
+            <button onclick="handleCalculation()">Calcular</button>
+            
+            <div class="results" id="results"></div>
+        </div>
+    </div>
+
+    <script>
+        const parameters = {
+            meat: {
+                man: 0.45,
+                woman: 0.35,
+                child: 0.2,
+                durationMultiplier: 1.25,
+                sidesReduction: 0.8
+            },
+            drinks: {
+                beer: 0.5,
+                soda: 0.3,
+                water: 0.2
+            }
+        };
+
+        function calculate() {
+            const men = parseInt(document.getElementById('men').value) || 0;
+            const women = parseInt(document.getElementById('women').value) || 0;
+            const children = parseInt(document.getElementById('children').value) || 0;
+            const hours = parseInt(document.getElementById('hours').value) || 4;
+            const sides = document.getElementById('sides').checked;
+
+            let meatTotal = (men * parameters.meat.man) + 
+                          (women * parameters.meat.woman) + 
+                          (children * parameters.meat.child);
+
+            if(hours > 4) meatTotal *= parameters.meat.durationMultiplier;
+            if(sides) meatTotal *= parameters.meat.sidesReduction;
+
+            return {
+                meat: Math.ceil(meatTotal),
+                beer: Math.ceil((men + women) * parameters.drinks.beer),
+                soda: Math.ceil((men + women + children) * parameters.drinks.soda),
+                water: Math.ceil((men + women + children) * parameters.drinks.water)
+            };
+        }
+
+        function displayResults(results) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = `
+                <div class="result-card">
+                    <h3>🥩 Carnes: ${results.meat} Kg</h3>
+                </div>
+                <div class="result-card">
+                    <h3>🍺 Cervejas: ${results.beer} garrafas (600ml)</h3>
+                </div>
+                <div class="result-card">
+                    <h3>🥤 Refrigerantes: ${results.soda} litros</h3>
+                </div>
+                <div class="result-card">
+                    <h3>💧 Água: ${results.water} litros</h3>
+                </div>
+            `;
+            
+            resultsContainer.style.opacity = '1';
+            resultsContainer.style.transform = 'translateY(0)';
+            
+            // Activar animaciones para cada tarjeta
+            document.querySelectorAll('.result-card').forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('visible');
+                }, index * 200);
+            });
+        }
+
+        function validateInputs() {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if(input.value < 0) {
+                    input.classList.add('error');
+                    isValid = false;
+                } else {
+                    input.classList.remove('error');
+                }
+            });
+
+            return isValid;
+        }
+
+        function handleCalculation() {
+            if(!validateInputs()) {
+                showNotification('❌ Por favor, insira valores válidos!', 'error');
+                return;
+            }
+
+            const results = calculate();
+            displayResults(results);
+            showNotification('✅ Cálculo realizado com sucesso!');
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 100);
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+
+        // Configurar eventos
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', () => {
+                clearTimeout(window.inputTimeout);
+                window.inputTimeout = setTimeout(handleCalculation, 500);
+            });
+        });
+    </script>
+</body>
+</html>
