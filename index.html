@@ -28,7 +28,7 @@
         }
 
         .container {
-            max-width: 800px;
+            max-width: 900px; /* Aumentei a largura */
             margin: 0 auto;
             animation: slideIn 1s ease;
         }
@@ -49,8 +49,14 @@
             backdrop-filter: blur(10px);
         }
 
-        .input-group {
+        .input-row {
+            display: flex;
+            gap: 1rem;
             margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            flex: 1; /* Distribui o espaço igualmente */
         }
 
         label {
@@ -112,6 +118,40 @@
             border-left: 5px solid var(--secondary);
         }
 
+        /* Estilos para a galeria de carnes */
+        .meat-gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Cria colunas responsivas */
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+
+        }
+
+        .meat-type-column {
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            padding: 1rem;
+        }
+
+        .meat-type-column h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .meat-variations {
+            display: flex;
+            flex-wrap: wrap; /* Permite que os itens quebrem para a próxima linha */
+            gap: 0.5rem;
+        }
+
+        .meat-variations span {
+            background: var(--secondary);
+            color: var(--background);
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -121,6 +161,9 @@
             body { padding: 1rem; }
             .calculator { padding: 1rem; }
             h1 { font-size: 2em; }
+            .input-row {
+                flex-direction: column; /* Empilha os campos em telas pequenas */
+            }
         }
     </style>
 </head>
@@ -138,83 +181,97 @@
                 </select>
             </div>
 
-            <div class="input-group">
-                <label for="men">Homens adultos:</label>
-                <input type="number" id="men" min="0" value="0">
+            <div class="input-row">
+                <div class="input-group">
+                    <label for="men">Homens:</label>
+                    <input type="number" id="men" min="0" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="women">Mulheres:</label>
+                    <input type="number" id="women" min="0" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="children">Crianças:</label>
+                    <input type="number" id="children" min="0" value="0">
+                </div>
+
+                <div class="input-group">
+                    <label for="hours">Duração (horas):</label>
+                    <input type="number" id="hours" min="1" value="4">
+                </div>
             </div>
 
-            <div class="input-group">
-                <label for="women">Mulheres adultas:</label>
-                <input type="number" id="women" min="0" value="0">
-            </div>
+            <!-- Galeria de Carnes -->
+           <div class="meat-gallery-container">
+                <div class="meat-type-column">
+                    <h3>🥩 Bovina</h3>
+                    <div class="meat-variations">
+                        <span>Costela</span>
+                        <span>Picanha</span>
+                        <span>Entrecot</span>
+                        <span>Maminha</span>
+                        <span>Vazio</span>
+                        <span>Contrafilé</span>
+                        <span>Bife de Chorizo</span>
+                        <span>Fraldinha</span>
+                        <span>Bife de Ancho</span>
+                        <span>Matambre</span>
+                        <span>Alcatra</span>
+                        <span>Chuletão</span>
+                        <span>Bife de Mignon</span>
+                        <span>Paleta</span>
+                        <span>Músculo</span>
+                    </div>
+                </div>
 
-            <div class="input-group">
-                <label for="children">Crianças:</label>
-                <input type="number" id="children" min="0" value="0">
-            </div>
+                <div class="meat-type-column">
+                    <h3>🐷 Suína</h3>
+                    <div class="meat-variations">
+                        <span>Linguiça Suína</span>
+                        <span>Bisteca de Lombo</span>
+                        <span>Bisteca</span>
+                        <span>Costela Suína</span>
+                        <span>Paleta Suína</span>
+                        <span>Entrecot Suíno</span>
+                        <span>Panceta Suína</span>
+                        <span>Sobrepaleta Suína</span>
+                        <span>Joelho Suíno</span>
+                        <span>Choripan Suíno</span>
+                        <span>Matambrinho Filé</span>
+                        <span>Carré Suíno</span>
+                        <span>Picanha Suína</span>
+                    </div>
+                </div>
 
-            <div class="input-group">
-                <label for="hours">Duração (horas):</label>
-                <input type="number" id="hours" min="1" value="4">
-            </div>
+                <div class="meat-type-column">
+                    <h3>🐔 Aves</h3>
+                    <div class="meat-variations">
+                        <span>Sobrecoxa de Frango</span>
+                        <span>Coxa de Frango</span>
+                        <span>Coxinha da Asa de Frango</span>
+                        <span>Coração de Frango</span>
+                        <span>Coxinha da Asa de Pato</span>
+                        <span>Asa de Frango</span>
+                        <span>Filé de Coxa e Sobrecoxa de Frango</span>
+                        <span>Linguiça de Frango</span>
+                        <span>Frango a Passarinho</span>
+                        <span>Frango Inteiro</span>
+                    </div>
+                </div>
 
-            <!-- Seletores de Carne -->
-            <div class="input-group">
-                <label for="meat-type">Tipo de Carne:</label>
-                <select id="meat-type" multiple size="8">
-                    <optgroup label="Bovina">
-                        <option value="costela">Costela</option>
-                        <option value="picanha">Picanha</option>
-                        <option value="entrecot">Entrecot</option>
-                        <option value="maminha">Maminha</option>
-                        <option value="vazio">Vazio</option>
-                        <option value="contrafile">Contrafilé</option>
-                        <option value="bife-chorizo">Bife de Chorizo</option>
-                        <option value="fraldinha">Fraldinha</option>
-                        <option value="bife-ancho">Bife de Ancho</option>
-                        <option value="matambre">Matambre</option>
-                        <option value="alcatra">Alcatra</option>
-                        <option value="chuletao">Chuletão</option>
-                        <option value="bife-mignon">Bife de Mignon</option>
-                        <option value="paleta">Paleta</option>
-                        <option value="musculo">Músculo</option>
-                    </optgroup>
-                    <optgroup label="Suína">
-                         <option value="linguica-suina">Linguiça Suína</option>
-                         <option value="bisteca-lombo">Bisteca de Lombo</option>
-                         <option value="bisteca">Bisteca</option>
-                         <option value="costela-suina">Costela Suína</option>
-                         <option value="paleta-suina">Paleta Suína</option>
-                         <option value="entrecot-suino">Entrecot Suíno</option>
-                         <option value="panceta-suina">Panceta Suína</option>
-                         <option value="sobrepaleta-suina">Sobrepaleta Suína</option>
-                         <option value="joelho-suino">Joelho Suíno</option>
-                         <option value="choripan-suino">Choripan Suíno</option>
-                         <option value="matambrinho-file">Matambrinho Filé</option>
-                         <option value="carre-suino">Carré Suíno</option>
-                         <option value="picanha-suina">Picanha Suína</option>
-                    </optgroup>
-                    <optgroup label="Aves">
-                        <option value="sobrecoxa">Sobrecoxa de Frango</option>
-                        <option value="coxa">Coxa de Frango</option>
-                        <option value="coxinha-asa">Coxinha da Asa de Frango</option>
-                        <option value="coracao">Coração de Frango</option>
-                        <option value="coxinha-asa-pato">Coxinha da Asa de Pato</option>
-                        <option value="asa">Asa de Frango</option>
-                        <option value="file-sobrecoxa">Filé de Coxa e Sobrecoxa de Frango</option>
-                        <option value="linguica-frango">Linguiça de Frango</option>
-                        <option value="frango-passarinho">Frango a Passarinho</option>
-                        <option value="frango-inteiro">Frango Inteiro</option>
-                    </optgroup>
-                    <optgroup label="Ovina">
-                        <option value="linguica-cordeiro">Linguiça de Cordeiro</option>
-                        <option value="pernil">Pernil de Cordeiro</option>
-                        <option value="paleta-cordeiro">Paleta de Cordeiro</option>
-                        <option value="picanha-cordeiro">Picanha de Cordeiro</option>
-                        <option value="carre">Carré de Cordeiro</option>
-                        <option value="lombo-cordeiro">Lombo de Cordeiro</option>
-                    </optgroup>
-                </select>
+                <div class="meat-type-column">
+                    <h3>🐑 Ovina</h3>
+                    <div class="meat-variations">
+                        <span>Linguiça de Cordeiro</span>
+                        <span>Pernil de Cordeiro</span>
+                        <span>Paleta de Cordeiro</span>
+                        <span>Picanha de Cordeiro</span>
+                        <span>Carré de Cordeiro</span>
+                        <span>Lombo de Cordeiro</span>
+                    </div>
+                </div>
             </div>
 
             <!-- Demais Seletores -->
