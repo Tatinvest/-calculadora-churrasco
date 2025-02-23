@@ -132,9 +132,9 @@
             <div class="input-group">
                 <label for="hunger">Nível de Fome:</label>
                 <select id="hunger">
-                    <option value="0.8">Pouca Fome</option>
-                    <option value="1" selected>Fome Média</option>
-                    <option value="1.2">Fome Alta</option>
+                    <option value="0.6">Nesguinha</option>
+                    <option value="1" selected>Só um prato</option>
+                    <option value="1.4">Come até o carvão</option>
                 </select>
             </div>
 
@@ -142,17 +142,17 @@
                 <label for="men">Homens adultos:</label>
                 <input type="number" id="men" min="0" value="0">
             </div>
-            
+
             <div class="input-group">
                 <label for="women">Mulheres adultas:</label>
                 <input type="number" id="women" min="0" value="0">
             </div>
-            
+
             <div class="input-group">
                 <label for="children">Crianças:</label>
                 <input type="number" id="children" min="0" value="0">
             </div>
-            
+
             <div class="input-group">
                 <label for="hours">Duração (horas):</label>
                 <input type="number" id="hours" min="1" value="4">
@@ -161,23 +161,58 @@
             <!-- Seletores de Carne -->
             <div class="input-group">
                 <label for="meat-type">Tipo de Carne:</label>
-                <select id="meat-type" multiple size="4">
+                <select id="meat-type" multiple size="8">
                     <optgroup label="Bovina">
                         <option value="costela">Costela</option>
                         <option value="picanha">Picanha</option>
+                        <option value="entrecot">Entrecot</option>
+                        <option value="maminha">Maminha</option>
+                        <option value="vazio">Vazio</option>
+                        <option value="contrafile">Contrafilé</option>
+                        <option value="bife-chorizo">Bife de Chorizo</option>
+                        <option value="fraldinha">Fraldinha</option>
+                        <option value="bife-ancho">Bife de Ancho</option>
+                        <option value="matambre">Matambre</option>
                         <option value="alcatra">Alcatra</option>
+                        <option value="chuletao">Chuletão</option>
+                        <option value="bife-mignon">Bife de Mignon</option>
+                        <option value="paleta">Paleta</option>
+                        <option value="musculo">Músculo</option>
                     </optgroup>
                     <optgroup label="Suína">
-                        <option value="costela-suina">Costela Suína</option>
-                        <option value="bisteca">Bisteca</option>
+                         <option value="linguica-suina">Linguiça Suína</option>
+                         <option value="bisteca-lombo">Bisteca de Lombo</option>
+                         <option value="bisteca">Bisteca</option>
+                         <option value="costela-suina">Costela Suína</option>
+                         <option value="paleta-suina">Paleta Suína</option>
+                         <option value="entrecot-suino">Entrecot Suíno</option>
+                         <option value="panceta-suina">Panceta Suína</option>
+                         <option value="sobrepaleta-suina">Sobrepaleta Suína</option>
+                         <option value="joelho-suino">Joelho Suíno</option>
+                         <option value="choripan-suino">Choripan Suíno</option>
+                         <option value="matambrinho-file">Matambrinho Filé</option>
+                         <option value="carre-suino">Carré Suíno</option>
+                         <option value="picanha-suina">Picanha Suína</option>
                     </optgroup>
                     <optgroup label="Aves">
                         <option value="sobrecoxa">Sobrecoxa de Frango</option>
+                        <option value="coxa">Coxa de Frango</option>
+                        <option value="coxinha-asa">Coxinha da Asa de Frango</option>
+                        <option value="coracao">Coração de Frango</option>
+                        <option value="coxinha-asa-pato">Coxinha da Asa de Pato</option>
                         <option value="asa">Asa de Frango</option>
+                        <option value="file-sobrecoxa">Filé de Coxa e Sobrecoxa de Frango</option>
+                        <option value="linguica-frango">Linguiça de Frango</option>
+                        <option value="frango-passarinho">Frango a Passarinho</option>
+                        <option value="frango-inteiro">Frango Inteiro</option>
                     </optgroup>
                     <optgroup label="Ovina">
+                        <option value="linguica-cordeiro">Linguiça de Cordeiro</option>
                         <option value="pernil">Pernil de Cordeiro</option>
+                        <option value="paleta-cordeiro">Paleta de Cordeiro</option>
+                        <option value="picanha-cordeiro">Picanha de Cordeiro</option>
                         <option value="carre">Carré de Cordeiro</option>
+                        <option value="lombo-cordeiro">Lombo de Cordeiro</option>
                     </optgroup>
                 </select>
             </div>
@@ -185,31 +220,69 @@
             <!-- Demais Seletores -->
             <div class="input-group">
                 <label for="sides">Guarnições:</label>
-                <select id="sides" multiple size="4">
-                    <option value="cebola">Cebola Roxa</option>
-                    <option value="tomate">Tomate</option>
-                    <option value="pimentao">Pimentão</option>
+                <select id="sides" multiple size="8">
+                     <option value="cebola-roxa">Cebola Roxa</option>
+                     <option value="tomate">Tomate</option>
+                     <option value="pimentao-vermelho">Pimentão Vermelho</option>
+                     <option value="batata-doce-rosada">Batata Doce Rosada</option>
+                     <option value="pimentao-amarelo">Pimentão Amarelo</option>
+                     <option value="batata-branca">Batata Branca</option>
+                     <option value="cebola-branca">Cebola Branca</option>
+                     <option value="cogumelo-castanho">Cogumelo Castanho</option>
+                     <option value="milho-verde">Milho Verde</option>
+                     <option value="abobrinha">Abobrinha</option>
+                     <option value="berinjela">Berinjela</option>
+                     <option value="pimentao-verde">Pimentão Verde</option>
+                     <option value="batata-rosa">Batata Rosa</option>
+                     <option value="cogumelo-grill">Cogumelo Grill</option>
+                     <option value="palmito-pupunha">Palmito Pupunha</option>
+                     <option value="aipim">Aipim</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="supplies">Suprimentos:</label>
-                <select id="supplies" multiple size="4">
+                <select id="supplies" multiple size="8">
                     <option value="carvao">Carvão</option>
+                    <option value="lenha">Lenha e Graveto</option>
                     <option value="grelha">Grelha</option>
+                    <option value="espeto">Espeto</option>
+                    <option value="tabua">Tábua</option>
+                    <option value="guardanapo">Guardanapo</option>
+                    <option value="copos">Copos e Taça</option>
+                    <option value="prato">Prato</option>
+                    <option value="talher">Talher</option>
+                    <option value="fosforos">Fósforos/Acendedores</option>
+                    <option value="caixa-termica">Caixa Térmica</option>
+                    <option value="pegadores">Pegadores</option>
+                    <option value="abridores">Abridores</option>
                 </select>
             </div>
 
             <div class="input-group">
                 <label for="drinks">Bebidas:</label>
-                <select id="drinks" multiple size="4">
-                    <option value="agua">Água</option>
-                    <option value="cerveja">Cerveja</option>
+                <select id="drinks" multiple size="8">
+                     <option value="agua">Água</option>
+                     <option value="cervejas">Cervejas</option>
+                     <option value="sucos">Sucos</option>
+                     <option value="refrigerantes">Refrigerantes</option>
+                     <option value="cervejas-especiais">Cervejas Especiais</option>
+                     <option value="vodka">Vodka</option>
+                     <option value="vinho-tinto">Vinho Tinto</option>
+                     <option value="vinho-branco">Vinho Branco</option>
+                     <option value="vinhos-roses">Vinhos Rosés</option>
+                     <option value="energetico">Energético</option>
+                     <option value="gin">Gin</option>
+                     <option value="tonicas">Tônicas</option>
+                     <option value="whisky">Whisky</option>
+                     <option value="espumantes">Espumantes</option>
+                     <option value="agua-coco">Água de Coco</option>
+                     <option value="cerveja-sem-alcool">Cerveja Sem Álcool</option>
                 </select>
             </div>
 
             <button onclick="handleCalculation()">Calcular Tudo</button>
-            
+
             <div class="results" id="results"></div>
         </div>
     </div>
@@ -218,9 +291,9 @@
         const parameters = {
             base: {
                 hungerMultipliers: {
-                    '0.8': 0.8,
+                    '0.6': 0.6,
                     '1': 1,
-                    '1.2': 1.2
+                    '1.4': 1.4
                 },
                 meatPerPerson: 0.4, // kg
                 drinkPerHour: 0.5, // litros
@@ -228,13 +301,6 @@
                     carvao: 1, // kg por 10 pessoas
                     grelha: 1 // unidade
                 }
-            },
-            
-            meatTypes: {
-                bovina: ['costela', 'picanha', 'alcatra'],
-                suina: ['costela-suina', 'bisteca'],
-                aves: ['sobrecoxa', 'asa'],
-                ovina: ['pernil', 'carre']
             }
         };
 
@@ -244,7 +310,7 @@
             const women = parseInt(document.getElementById('women').value) || 0;
             const children = parseInt(document.getElementById('children').value) || 0;
             const hours = parseInt(document.getElementById('hours').value) || 4;
-            
+
             // Cálculo de carne
             const totalPeople = men + women + (children * 0.5);
             const meatTotal = totalPeople * parameters.base.meatPerPerson * hungerLevel;
@@ -252,7 +318,8 @@
             // Cálculo de bebidas
             const drinksTotal = {
                 agua: Math.ceil(totalPeople * hours * 0.5),
-                cerveja: Math.ceil((men + women) * hours * 0.75)
+                cerveja: Math.ceil((men + women) * hours * 0.75),
+                refrigerante: Math.ceil(totalPeople * hours * 0.5)
             };
 
             // Cálculo de suprimentos
@@ -267,7 +334,8 @@
                 supplies: suppliesTotal,
                 selectedMeats: Array.from(document.getElementById('meat-type').selectedOptions).map(o => o.text),
                 selectedSides: Array.from(document.getElementById('sides').selectedOptions).map(o => o.text),
-                selectedDrinks: Array.from(document.getElementById('drinks').selectedOptions).map(o => o.text)
+                selectedDrinks: Array.from(document.getElementById('drinks').selectedOptions).map(o => o.text),
+                selectedSupplies: Array.from(document.getElementById('supplies').selectedOptions).map(o => o.text)
             };
         }
 
@@ -285,6 +353,7 @@
                     <p>Selecionadas: ${results.selectedDrinks.join(', ')}</p>
                     <p>Água: ${results.drinks.agua} Litros</p>
                     <p>Cerveja: ${results.drinks.cerveja} Garrafas</p>
+                    <p>Refrigerante: ${results.drinks.refrigerante} Litros</p>
                 </div>
 
                 <div class="result-card">
@@ -292,13 +361,12 @@
                     <p>${results.selectedSides.join(', ')}</p>
                 </div>
 
-                <div class="result-card">
+                 <div class="result-card">
                     <h3>🔥 Suprimentos:</h3>
-                    <p>Carvão: ${results.supplies.carvao} Kg</p>
-                    <p>Grelha: ${results.supplies.grelha} Unidade</p>
+                    <p>${results.selectedSupplies.join(', ')}</p>
                 </div>
             `;
-            
+
             resultsContainer.style.opacity = '1';
             resultsContainer.style.transform = 'translateY(0)';
         }
