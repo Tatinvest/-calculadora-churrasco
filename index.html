@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Churrasco Moderna</title>
+    <title>Calculadora Completa de Churrasco</title>
     <style>
         :root {
             --primary: #FF6B6B;
@@ -60,7 +60,7 @@
             font-weight: 500;
         }
 
-        input[type="number"], input[type="checkbox"] {
+        select, input[type="number"], input[type="checkbox"] {
             width: 100%;
             padding: 12px;
             border: none;
@@ -71,7 +71,7 @@
             transition: all 0.3s ease;
         }
 
-        input[type="number"]:focus {
+        select:focus, input[type="number"]:focus {
             border-bottom-color: var(--accent);
             outline: none;
             transform: scale(1.02);
@@ -112,11 +112,6 @@
             border-left: 5px solid var(--secondary);
         }
 
-        .result-card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
         @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -131,8 +126,18 @@
 </head>
 <body>
     <div class="container">
-        <h1>🍖 Calculadora de Churrasco</h1>
+        <h1>🍖 Calculadora Completa de Churrasco</h1>
         <div class="calculator">
+            <!-- Inputs Básicos -->
+            <div class="input-group">
+                <label for="hunger">Nível de Fome:</label>
+                <select id="hunger">
+                    <option value="0.8">Pouca Fome</option>
+                    <option value="1" selected>Fome Média</option>
+                    <option value="1.2">Fome Alta</option>
+                </select>
+            </div>
+
             <div class="input-group">
                 <label for="men">Homens adultos:</label>
                 <input type="number" id="men" min="0" value="0">
@@ -152,14 +157,58 @@
                 <label for="hours">Duração (horas):</label>
                 <input type="number" id="hours" min="1" value="4">
             </div>
-            
+
+            <!-- Seletores de Carne -->
             <div class="input-group">
-                <label>
-                    <input type="checkbox" id="sides"> Terá acompanhamentos?
-                </label>
+                <label for="meat-type">Tipo de Carne:</label>
+                <select id="meat-type" multiple size="4">
+                    <optgroup label="Bovina">
+                        <option value="costela">Costela</option>
+                        <option value="picanha">Picanha</option>
+                        <option value="alcatra">Alcatra</option>
+                    </optgroup>
+                    <optgroup label="Suína">
+                        <option value="costela-suina">Costela Suína</option>
+                        <option value="bisteca">Bisteca</option>
+                    </optgroup>
+                    <optgroup label="Aves">
+                        <option value="sobrecoxa">Sobrecoxa de Frango</option>
+                        <option value="asa">Asa de Frango</option>
+                    </optgroup>
+                    <optgroup label="Ovina">
+                        <option value="pernil">Pernil de Cordeiro</option>
+                        <option value="carre">Carré de Cordeiro</option>
+                    </optgroup>
+                </select>
             </div>
-            
-            <button onclick="handleCalculation()">Calcular</button>
+
+            <!-- Demais Seletores -->
+            <div class="input-group">
+                <label for="sides">Guarnições:</label>
+                <select id="sides" multiple size="4">
+                    <option value="cebola">Cebola Roxa</option>
+                    <option value="tomate">Tomate</option>
+                    <option value="pimentao">Pimentão</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="supplies">Suprimentos:</label>
+                <select id="supplies" multiple size="4">
+                    <option value="carvao">Carvão</option>
+                    <option value="grelha">Grelha</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="drinks">Bebidas:</label>
+                <select id="drinks" multiple size="4">
+                    <option value="agua">Água</option>
+                    <option value="cerveja">Cerveja</option>
+                </select>
+            </div>
+
+            <button onclick="handleCalculation()">Calcular Tudo</button>
             
             <div class="results" id="results"></div>
         </div>
@@ -167,39 +216,58 @@
 
     <script>
         const parameters = {
-            meat: {
-                man: 0.45,
-                woman: 0.35,
-                child: 0.2,
-                durationMultiplier: 1.25,
-                sidesReduction: 0.8
+            base: {
+                hungerMultipliers: {
+                    '0.8': 0.8,
+                    '1': 1,
+                    '1.2': 1.2
+                },
+                meatPerPerson: 0.4, // kg
+                drinkPerHour: 0.5, // litros
+                suppliesBase: {
+                    carvao: 1, // kg por 10 pessoas
+                    grelha: 1 // unidade
+                }
             },
-            drinks: {
-                beer: 0.5,
-                soda: 0.3,
-                water: 0.2
+            
+            meatTypes: {
+                bovina: ['costela', 'picanha', 'alcatra'],
+                suina: ['costela-suina', 'bisteca'],
+                aves: ['sobrecoxa', 'asa'],
+                ovina: ['pernil', 'carre']
             }
         };
 
-        function calculate() {
+        function calculateAll() {
+            const hungerLevel = parseFloat(document.getElementById('hunger').value);
             const men = parseInt(document.getElementById('men').value) || 0;
             const women = parseInt(document.getElementById('women').value) || 0;
             const children = parseInt(document.getElementById('children').value) || 0;
             const hours = parseInt(document.getElementById('hours').value) || 4;
-            const sides = document.getElementById('sides').checked;
+            
+            // Cálculo de carne
+            const totalPeople = men + women + (children * 0.5);
+            const meatTotal = totalPeople * parameters.base.meatPerPerson * hungerLevel;
 
-            let meatTotal = (men * parameters.meat.man) + 
-                          (women * parameters.meat.woman) + 
-                          (children * parameters.meat.child);
+            // Cálculo de bebidas
+            const drinksTotal = {
+                agua: Math.ceil(totalPeople * hours * 0.5),
+                cerveja: Math.ceil((men + women) * hours * 0.75)
+            };
 
-            if(hours > 4) meatTotal *= parameters.meat.durationMultiplier;
-            if(sides) meatTotal *= parameters.meat.sidesReduction;
+            // Cálculo de suprimentos
+            const suppliesTotal = {
+                carvao: Math.ceil(totalPeople / 10 * parameters.base.suppliesBase.carvao),
+                grelha: parameters.base.suppliesBase.grelha
+            };
 
             return {
                 meat: Math.ceil(meatTotal),
-                beer: Math.ceil((men + women) * parameters.drinks.beer),
-                soda: Math.ceil((men + women + children) * parameters.drinks.soda),
-                water: Math.ceil((men + women + children) * parameters.drinks.water)
+                drinks: drinksTotal,
+                supplies: suppliesTotal,
+                selectedMeats: Array.from(document.getElementById('meat-type').selectedOptions).map(o => o.text),
+                selectedSides: Array.from(document.getElementById('sides').selectedOptions).map(o => o.text),
+                selectedDrinks: Array.from(document.getElementById('drinks').selectedOptions).map(o => o.text)
             };
         }
 
@@ -207,78 +275,45 @@
             const resultsContainer = document.getElementById('results');
             resultsContainer.innerHTML = `
                 <div class="result-card">
-                    <h3>🥩 Carnes: ${results.meat} Kg</h3>
+                    <h3>🥩 Carnes Selecionadas:</h3>
+                    <p>${results.selectedMeats.join(', ')}</p>
+                    <p><strong>Total: ${results.meat} Kg</strong></p>
                 </div>
+
                 <div class="result-card">
-                    <h3>🍺 Cervejas: ${results.beer} garrafas (600ml)</h3>
+                    <h3>🍹 Bebidas:</h3>
+                    <p>Selecionadas: ${results.selectedDrinks.join(', ')}</p>
+                    <p>Água: ${results.drinks.agua} Litros</p>
+                    <p>Cerveja: ${results.drinks.cerveja} Garrafas</p>
                 </div>
+
                 <div class="result-card">
-                    <h3>🥤 Refrigerantes: ${results.soda} litros</h3>
+                    <h3>🥗 Acompanhamentos:</h3>
+                    <p>${results.selectedSides.join(', ')}</p>
                 </div>
+
                 <div class="result-card">
-                    <h3>💧 Água: ${results.water} litros</h3>
+                    <h3>🔥 Suprimentos:</h3>
+                    <p>Carvão: ${results.supplies.carvao} Kg</p>
+                    <p>Grelha: ${results.supplies.grelha} Unidade</p>
                 </div>
             `;
             
             resultsContainer.style.opacity = '1';
             resultsContainer.style.transform = 'translateY(0)';
-            
-            // Activar animaciones para cada tarjeta
-            document.querySelectorAll('.result-card').forEach((card, index) => {
-                setTimeout(() => {
-                    card.classList.add('visible');
-                }, index * 200);
-            });
-        }
-
-        function validateInputs() {
-            const inputs = document.querySelectorAll('input[type="number"]');
-            let isValid = true;
-
-            inputs.forEach(input => {
-                if(input.value < 0) {
-                    input.classList.add('error');
-                    isValid = false;
-                } else {
-                    input.classList.remove('error');
-                }
-            });
-
-            return isValid;
         }
 
         function handleCalculation() {
-            if(!validateInputs()) {
-                showNotification('❌ Por favor, insira valores válidos!', 'error');
-                return;
-            }
-
-            const results = calculate();
+            const results = calculateAll();
             displayResults(results);
-            showNotification('✅ Cálculo realizado com sucesso!');
         }
 
-        function showNotification(message, type = 'success') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.textContent = message;
-            document.body.appendChild(notification);
-
-            setTimeout(() => {
-                notification.classList.add('show');
-            }, 100);
-
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 500);
-            }, 3000);
-        }
-
-        // Configurar eventos
-        document.querySelectorAll('input').forEach(input => {
-            input.addEventListener('input', () => {
-                clearTimeout(window.inputTimeout);
-                window.inputTimeout = setTimeout(handleCalculation, 500);
+        // Multi-select com Ctrl/Cmd
+        document.querySelectorAll('select[multiple]').forEach(select => {
+            select.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                const option = e.target;
+                option.selected = !option.selected;
             });
         });
     </script>
